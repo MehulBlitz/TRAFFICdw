@@ -2,269 +2,162 @@
 
 @layer base {
   body {
-    @apply bg-neutral-950 text-neutral-100 antialiased select-none font-mono;
+    @apply bg-[#ebf0f7] text-slate-800 antialiased font-sans;
+    background-color: #ebf0f7;
+    color: #2b3445;
     overflow-x: hidden;
   }
 }
 
 /* ==========================================================================
-   SKEUOMORPHIC TEXTURES & SURFACE GRADIENTS
+   NEUMORPHIC SOFT SKEUOMORPHIC SHADOWS & SURFACES
    ========================================================================== */
 
-/* Heavy Brushed Dark Industrial Aluminum Chassis */
-.bg-brushed-chassis {
-  background: radial-gradient(circle at 50% 20%, #2a2d32 0%, #17191d 60%, #0d0e11 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -2px 5px rgba(0, 0, 0, 0.8), 0 10px 30px rgba(0, 0, 0, 0.9);
+/* Main Neumorphic Canvas Base Color: #ebf0f7 / #e8ecf4 */
+
+/* Raised Soft Card (Convex Surface) */
+.neu-raised {
+  background: #ebf0f7;
+  box-shadow: 8px 8px 18px #cad3e0, -8px -8px 18px #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
-/* Brushed Silver Aluminum Faceplate */
-.bg-brushed-silver {
-  background: linear-gradient(180deg, #e6e9ee 0%, #cbd1dc 45%, #b4bccb 55%, #dce0e8 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 -1px 2px rgba(0, 0, 0, 0.4), 0 2px 5px rgba(0, 0, 0, 0.3);
+.neu-raised-sm {
+  background: #ebf0f7;
+  box-shadow: 4px 4px 10px #cfd7e4, -4px -4px 10px #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.7);
 }
 
-/* Matte Textured Instrument Panel */
-.bg-instrument-panel {
-  background: linear-gradient(180deg, #24272c 0%, #1b1e22 100%);
-  box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.6), inset 0 -1px 0 rgba(255, 255, 255, 0.08), 0 4px 12px rgba(0, 0, 0, 0.5);
-  border: 1px solid #141619;
+.neu-raised-lg {
+  background: #ebf0f7;
+  box-shadow: 12px 12px 28px #c5d0de, -12px -12px 28px #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
-/* Beveled Inset Well (For Screens, Faders, Dials) */
-.inset-chassis-well {
-  background: #0d0f12;
-  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.9), inset 0 1px 2px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(255, 255, 255, 0.08);
-  border: 1px solid #111316;
+/* Inset / Sunken / Pressed Wells (Concave Surface) */
+.neu-inset {
+  background: #ebf0f7;
+  box-shadow: inset 4px 4px 8px #cad3e0, inset -4px -4px 8px #ffffff;
+  border: 1px solid rgba(200, 210, 225, 0.3);
 }
 
-/* Tactile Mechanical Screw Head */
-.screw-head {
-  width: 14px;
-  height: 14px;
+.neu-inset-sm {
+  background: #ebf0f7;
+  box-shadow: inset 2px 2px 5px #cbd4e2, inset -2px -2px 5px #ffffff;
+}
+
+.neu-inset-deep {
+  background: #e5ecf5;
+  box-shadow: inset 6px 6px 12px #c3cee0, inset -6px -6px 12px #ffffff;
+}
+
+/* Neumorphic Interactive Button */
+.neu-btn {
+  background: #ebf0f7;
+  box-shadow: 5px 5px 12px #cad3e0, -5px -5px 12px #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #334155;
+}
+
+.neu-btn:hover {
+  box-shadow: 6px 6px 14px #c2cde0, -6px -6px 14px #ffffff;
+  color: #0f172a;
+}
+
+.neu-btn:active, .neu-btn-active {
+  box-shadow: inset 3px 3px 7px #cad3e0, inset -3px -3px 7px #ffffff !important;
+  color: #2563eb;
+  transform: translateY(1px);
+}
+
+/* Neumorphic Circular Button / Dial */
+.neu-circle {
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #888d96 0%, #3e4249 70%, #1e2024 100%);
-  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4), 0 1px 2px rgba(0, 0, 0, 0.8);
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-.screw-head::after {
-  content: '';
-  width: 9px;
-  height: 2px;
-  background: #111316;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
-  transform: rotate(35deg);
+  background: #ebf0f7;
+  box-shadow: 8px 8px 16px #cad3e0, -8px -8px 16px #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
-/* ==========================================================================
-   CLASSIC GREEN & AMBER PHOSPHOR CRT SCREEN STYLES
-   ========================================================================== */
-
-.crt-bezel {
-  background: linear-gradient(135deg, #1f2327 0%, #121417 50%, #282c32 100%);
-  border: 4px solid #0a0b0d;
-  box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.9), 0 8px 24px rgba(0, 0, 0, 0.8);
-  border-radius: 12px;
-  position: relative;
+.neu-circle-inset {
+  border-radius: 50%;
+  background: #ebf0f7;
+  box-shadow: inset 4px 4px 8px #cad3e0, inset -4px -4px 8px #ffffff;
 }
 
-.crt-glass-green {
-  background: radial-gradient(circle at 50% 50%, #062212 0%, #021108 80%, #010804 100%);
-  color: #33ff66;
-  text-shadow: 0 0 6px rgba(51, 255, 102, 0.7);
-  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.9), inset 0 0 10px rgba(51, 255, 102, 0.2);
-}
-
-.crt-glass-amber {
-  background: radial-gradient(circle at 50% 50%, #2c1a04 0%, #160d02 80%, #0a0501 100%);
-  color: #ffb000;
-  text-shadow: 0 0 6px rgba(255, 176, 0, 0.7);
-  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.9), inset 0 0 10px rgba(255, 176, 0, 0.2);
-}
-
-/* CRT Scanlines Overlay */
-.scanlines {
-  background: linear-gradient(
-    rgba(18, 16, 16, 0) 50%, 
-    rgba(0, 0, 0, 0.35) 50%
-  ), linear-gradient(
-    90deg,
-    rgba(255, 0, 0, 0.04),
-    rgba(0, 255, 0, 0.02),
-    rgba(0, 0, 255, 0.04)
+/* Rainbow / Spectrum Thermostat Arc Gradient */
+.neu-gradient-spectrum {
+  background: conic-gradient(
+    from 180deg at 50% 50%,
+    #06b6d4 0deg,
+    #3b82f6 70deg,
+    #8b5cf6 140deg,
+    #ec4899 210deg,
+    #f97316 280deg,
+    #ef4444 320deg,
+    #06b6d4 360deg
   );
-  background-size: 100% 3px, 6px 100%;
-  pointer-events: none;
 }
 
-/* ==========================================================================
-   BLUEPRINT & DRAFTING PAPER THEMES
-   ========================================================================== */
-
-.blueprint-grid {
-  background-color: #0b2244;
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
-    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
-  color: #e2eeff;
+.neu-gradient-soft {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, rgba(139, 92, 246, 0.15) 50%, rgba(249, 115, 22, 0.15) 100%);
 }
 
-/* Classic Printed Accounting Ledger Paper */
-.ledger-paper {
-  background-color: #f7f9f2;
-  background-image: 
-    linear-gradient(#dce4d0 1px, transparent 1px),
-    linear-gradient(90deg, #dce4d0 1px, transparent 1px);
-  background-size: 100% 28px, 120px 100%;
-  color: #1a291e;
-  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* ==========================================================================
-   TACTILE MECHANICAL PUSH BUTTONS & TOGGLES
-   ========================================================================== */
-
-.mech-btn {
-  background: linear-gradient(180deg, #3d424b 0%, #262a30 60%, #1c1f24 100%);
-  box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.3), 
-    0 4px 6px rgba(0, 0, 0, 0.6), 
-    0 1px 2px rgba(0, 0, 0, 0.4);
-  border: 1px solid #14171a;
-  transition: all 0.06s ease-out;
-}
-.mech-btn:hover {
-  background: linear-gradient(180deg, #484e58 0%, #2d323a 60%, #20242a 100%);
-}
-.mech-btn:active, .mech-btn-pressed {
-  transform: translateY(2px);
-  box-shadow: 
-    inset 0 3px 6px rgba(0, 0, 0, 0.8), 
-    0 1px 1px rgba(0, 0, 0, 0.4);
-  background: linear-gradient(180deg, #1c1f24 0%, #24282e 100%);
-}
-
-/* Physical Rocker Toggle Switch */
-.rocker-switch {
-  width: 38px;
-  height: 60px;
-  border-radius: 6px;
-  background: #111316;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.9), 0 1px 0 rgba(255, 255, 255, 0.1);
-  padding: 4px;
-  cursor: pointer;
-  position: relative;
-}
-
-.rocker-lever-up {
-  background: linear-gradient(180deg, #e02424 0%, #991b1b 50%, #450a0a 100%);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.6);
-  transform: translateY(0);
-}
-.rocker-lever-down {
-  background: linear-gradient(180deg, #2a2e35 0%, #1e2126 50%, #14161a 100%);
-  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.8);
-  transform: translateY(18px);
-}
-
-/* ==========================================================================
-   FADERS & SLIDERS (MIXING CONSOLE TRACK & CHROME KNOBS)
-   ========================================================================== */
-
-.fader-track {
-  width: 10px;
-  border-radius: 5px;
-  background: #090a0c;
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.95), 0 1px 0 rgba(255, 255, 255, 0.1);
-  position: relative;
-}
-
-.fader-cap {
-  width: 44px;
-  height: 26px;
-  border-radius: 4px;
-  background: linear-gradient(180deg, #626874 0%, #363a42 40%, #202328 60%, #484e58 100%);
-  box-shadow: 
-    0 4px 8px rgba(0, 0, 0, 0.8), 
-    inset 0 1px 1px rgba(255, 255, 255, 0.6), 
-    inset 0 -1px 2px rgba(0, 0, 0, 0.7);
-  border: 1px solid #1a1d22;
-  cursor: grab;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.fader-cap::after {
-  content: '';
-  width: 22px;
-  height: 2px;
-  background: #ffffff;
-  box-shadow: 0 0 4px #ffffff, 0 1px 1px rgba(0, 0, 0, 0.8);
-}
-.fader-cap:active {
-  cursor: grabbing;
-}
-
-/* ==========================================================================
-   LED JEWEL LIGHTS & GAUGES
-   ========================================================================== */
-
+/* Soft LED Glow Jewels */
 .led-jewel {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  border: 1px solid rgba(0, 0, 0, 0.8);
 }
 
 .led-on-green {
-  background: radial-gradient(circle at 35% 35%, #86efac 0%, #22c55e 50%, #14532d 100%);
-  box-shadow: 0 0 10px #22c55e, 0 0 20px rgba(34, 197, 94, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+  background: radial-gradient(circle at 35% 35%, #86efac 0%, #10b981 60%, #047857 100%);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
 }
 .led-off-green {
-  background: radial-gradient(circle at 35% 35%, #14532d 0%, #052e16 80%);
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.9);
-  opacity: 0.4;
-}
-
-.led-on-red {
-  background: radial-gradient(circle at 35% 35%, #fca5a5 0%, #ef4444 50%, #7f1d1d 100%);
-  box-shadow: 0 0 10px #ef4444, 0 0 20px rgba(239, 68, 68, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.8);
-}
-.led-off-red {
-  background: radial-gradient(circle at 35% 35%, #7f1d1d 0%, #450a0a 80%);
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.9);
-  opacity: 0.4;
-}
-
-.led-on-amber {
-  background: radial-gradient(circle at 35% 35%, #fde047 0%, #eab308 50%, #713f12 100%);
-  box-shadow: 0 0 10px #eab308, 0 0 20px rgba(234, 179, 8, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.8);
-}
-.led-off-amber {
-  background: radial-gradient(circle at 35% 35%, #713f12 0%, #422006 80%);
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.9);
-  opacity: 0.4;
+  background: #cbd5e1;
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.15);
 }
 
 .led-on-blue {
-  background: radial-gradient(circle at 35% 35%, #93c5fd 0%, #3b82f6 50%, #1e3a8a 100%);
-  box-shadow: 0 0 10px #3b82f6, 0 0 20px rgba(59, 130, 246, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+  background: radial-gradient(circle at 35% 35%, #93c5fd 0%, #3b82f6 60%, #1d4ed8 100%);
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
 }
 .led-off-blue {
-  background: radial-gradient(circle at 35% 35%, #1e3a8a 0%, #0f172a 80%);
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.9);
-  opacity: 0.4;
+  background: #cbd5e1;
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.15);
 }
 
-/* Engraved Bevel Text */
-.engraved-text {
-  color: #717782;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 -1px 0 rgba(0, 0, 0, 0.9);
-  font-weight: 700;
-  letter-spacing: 0.08em;
+.led-on-amber {
+  background: radial-gradient(circle at 35% 35%, #fde047 0%, #f59e0b 60%, #b45309 100%);
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
+}
+.led-off-amber {
+  background: #cbd5e1;
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.led-on-red {
+  background: radial-gradient(circle at 35% 35%, #fca5a5 0%, #ef4444 60%, #b91c1c 100%);
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+}
+.led-off-red {
+  background: #cbd5e1;
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* Custom Soft Scrollbars */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }

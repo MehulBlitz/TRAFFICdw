@@ -36,33 +36,26 @@ export const ConsoleFader: React.FC<ConsoleFaderProps> = ({
 
   if (vertical) {
     return (
-      <div id={id} className="flex flex-col items-center gap-2 p-3 bg-neutral-900/90 rounded-lg border border-neutral-800 shadow-inner">
-        <span className="text-[11px] font-bold text-neutral-300 text-center tracking-tight">{label}</span>
-        
-        {/* Vertical Fader Track Container */}
+      <div
+        id={id}
+        className="flex flex-col items-center gap-2 p-4 neu-raised rounded-3xl"
+      >
+        <span className="text-xs font-semibold text-slate-500 text-center tracking-tight">
+          {label}
+        </span>
+
+        {/* Vertical Track */}
         <div className="relative h-44 w-12 flex items-center justify-center py-2">
-          {/* Tick Scale Marks */}
-          <div className="absolute left-1 h-full flex flex-col justify-between text-[8px] text-neutral-500 font-mono select-none">
-            <span>+10</span>
-            <span>+5</span>
-            <span>0</span>
-            <span>-5</span>
-            <span>-∞</span>
-          </div>
-
-          {/* Recessed Track */}
-          <div className="w-2.5 h-full bg-neutral-950 rounded-full border border-neutral-800 shadow-inner relative flex justify-center">
-            {/* Center Slot Line */}
-            <div className="w-0.5 h-full bg-black/80" />
-            
-            {/* Chrome Fader Cap */}
+          <div className="w-3 h-full neu-inset-sm rounded-full relative flex justify-center">
+            {/* Slider Thumb */}
             <div
-              className="absolute w-10 h-7 fader-cap rounded shadow-lg transition-all duration-75 flex items-center justify-center"
-              style={{ bottom: `calc(${percent}% - 14px)` }}
-            />
+              className="absolute w-8 h-8 rounded-full neu-circle bg-[#ebf0f7] transition-all duration-75 shadow-md flex items-center justify-center"
+              style={{ bottom: `calc(${percent}% - 16px)` }}
+            >
+              <div className="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-sm" />
+            </div>
           </div>
 
-          {/* Hidden Input for interaction */}
           <input
             type="range"
             min={min}
@@ -75,34 +68,43 @@ export const ConsoleFader: React.FC<ConsoleFaderProps> = ({
           />
         </div>
 
-        {/* Digital Readout */}
-        <div className="px-2 py-0.5 bg-black border border-neutral-700 rounded text-[11px] font-mono font-bold text-amber-400">
-          {value.toFixed(step < 1 ? 2 : 0)}{unit}
+        {/* Value Readout */}
+        <div className="px-2.5 py-1 neu-inset-sm rounded-xl text-xs font-bold text-slate-800">
+          {value.toFixed(step < 1 ? 2 : 0)}
+          {unit}
         </div>
       </div>
     );
   }
 
-  // Horizontal Console Fader
+  // Horizontal Neumorphic Slider
   return (
-    <div id={id} className="flex flex-col gap-1.5 p-2.5 bg-neutral-900/90 rounded-lg border border-neutral-800 shadow-inner">
+    <div
+      id={id}
+      className="flex flex-col gap-2 p-3.5 neu-raised rounded-2xl"
+    >
       <div className="flex items-center justify-between">
-        <span className="text-xs font-bold text-neutral-300 tracking-tight">{label}</span>
-        <span className="px-1.5 py-0.5 bg-black border border-neutral-800 rounded text-[11px] font-mono font-bold text-amber-400">
+        <span className="text-xs font-semibold text-slate-600">{label}</span>
+        <span className="px-2 py-0.5 neu-inset-sm rounded-lg text-xs font-bold text-slate-800">
           {value.toFixed(step < 1 ? 2 : 0)} {unit}
         </span>
       </div>
 
-      <div className="relative py-3 flex items-center">
-        {/* Recessed Track */}
-        <div className="w-full h-3 bg-neutral-950 rounded-full border border-neutral-800 shadow-inner relative flex items-center">
-          <div className="w-full h-0.5 bg-black/90" />
-          
-          {/* Fader Cap */}
+      <div className="relative py-2 flex items-center">
+        {/* Recessed Track with Gradient fill */}
+        <div className="w-full h-2.5 neu-inset-sm rounded-full relative flex items-center overflow-hidden">
           <div
-            className="absolute top-1/2 -translate-y-1/2 w-8 h-6 fader-cap rounded shadow-md pointer-events-none"
-            style={{ left: `calc(${percent}% - 16px)` }}
+            className="h-full bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full transition-all"
+            style={{ width: `${percent}%` }}
           />
+        </div>
+
+        {/* Floating Thumb */}
+        <div
+          className="absolute top-1/2 -translate-y-1/2 w-6 h-6 rounded-full neu-circle bg-[#ebf0f7] pointer-events-none flex items-center justify-center shadow-md"
+          style={{ left: `calc(${percent}% - 12px)` }}
+        >
+          <div className="w-2 h-2 rounded-full bg-blue-500" />
         </div>
 
         <input
@@ -117,7 +119,7 @@ export const ConsoleFader: React.FC<ConsoleFaderProps> = ({
       </div>
 
       {ticks && (
-        <div className="flex justify-between text-[9px] text-neutral-500 font-mono px-1">
+        <div className="flex justify-between text-[10px] text-slate-400 font-medium px-1">
           {ticks.map((t, i) => (
             <span key={i}>{t.label}</span>
           ))}
@@ -126,3 +128,4 @@ export const ConsoleFader: React.FC<ConsoleFaderProps> = ({
     </div>
   );
 };
+

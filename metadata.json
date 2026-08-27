@@ -1,6 +1,7 @@
 {
   "name": "TrafficDW Studio",
-  "description": "A zero-code skeuomorphic traffic data warehouse, OLAP analytics, machine learning & data mining platform with physical controls, real-world schemas, interactive algorithms, and BI reporting.",
+  "description": "Tactile skeuomorphic Traffic Data Warehouse & Mining Studio with 24H OLAP Time-Lapse playback, 3D Indian Highway Spatial GIS, Isolation Forest & FASTag Fraud Anomaly Engine, Multi-Model Arena & SHAP Explainable AI, Visual SQL Planner, and custom dataset ingestion.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
+

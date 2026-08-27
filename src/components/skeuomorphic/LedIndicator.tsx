@@ -24,10 +24,11 @@ export const LedIndicator: React.FC<LedIndicatorProps> = ({
     <div id={id} className="inline-flex items-center gap-2 select-none">
       <div className={`led-jewel ${getLedClass()} shrink-0`} />
       {label && (
-        <span className="text-[11px] font-semibold tracking-tight text-neutral-300">
+        <span className="text-xs font-semibold tracking-tight text-slate-600">
           {label}
         </span>
       )}
     </div>
   );
 };
+

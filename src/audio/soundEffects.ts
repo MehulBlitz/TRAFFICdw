@@ -41,6 +41,10 @@ export function playRelayChime() {
   playRelayEngage();
 }
 
+export function playSwitchToggle() {
+  playSwitchClick('up');
+}
+
 
 // Heavy mechanical toggle switch click (spring and contact sound)
 export function playSwitchClick(type: 'up' | 'down' = 'up') {

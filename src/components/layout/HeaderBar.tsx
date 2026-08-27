@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { LedIndicator } from '../skeuomorphic/LedIndicator';
-import { Radio, ShieldAlert, Cpu } from 'lucide-react';
+import { Activity, Zap, Radio, Clock, ShieldCheck } from 'lucide-react';
 
-export const HeaderBar: React.FC = () => {
+interface HeaderBarProps {
+  datasetName?: string;
+  onOpenUploadModal?: () => void;
+}
+
+export const HeaderBar: React.FC<HeaderBarProps> = ({
+  datasetName = 'National Indian Highway Star Schema v2.4',
+  onOpenUploadModal,
+}) => {
   const [timeStr, setTimeStr] = useState<string>(new Date().toLocaleTimeString());
 
   useEffect(() => {
@@ -15,56 +23,68 @@ export const HeaderBar: React.FC = () => {
   return (
     <header
       id="main-industrial-header"
-      className="w-full bg-brushed-chassis border-b-2 border-neutral-800 px-5 py-3 rounded-2xl shadow-2xl flex flex-wrap items-center justify-between gap-4 select-none relative"
+      className="w-full neu-raised-lg px-6 py-4 rounded-3xl flex flex-wrap items-center justify-between gap-4 select-none relative"
     >
-      {/* Brand Identity & Physical Model Badge */}
+      {/* Brand Identity & Soft User Greeting (Inspired by Reference Screenshot) */}
       <div className="flex items-center gap-4">
-        <div className="screw-head" />
+        {/* Soft Elevated App Icon */}
+        <div className="w-12 h-12 rounded-2xl neu-raised flex items-center justify-center text-blue-600 shadow-md">
+          <Radio className="w-6 h-6" />
+        </div>
 
-        <div className="flex items-center gap-3">
-          {/* Metallic Cast Logo Plate */}
-          <div className="bg-gradient-to-b from-neutral-200 via-neutral-400 to-neutral-500 p-2 rounded-lg border-2 border-neutral-700 shadow-md flex items-center justify-center">
-            <Radio className="w-5 h-5 text-neutral-950 font-black" />
+        <div>
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl font-bold text-slate-800 tracking-tight">
+              TrafficDW <span className="text-blue-600">Studio</span>
+            </h1>
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700">
+              PRO DW
+            </span>
           </div>
-
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-base font-black tracking-widest text-neutral-100 uppercase font-mono">
-                TrafficDW Studio
-              </h1>
-              <span className="bg-amber-500 text-black px-1.5 py-0.2 rounded text-[10px] font-black uppercase tracking-wider">
-                MARK-II
-              </span>
-            </div>
-            <p className="text-[10px] text-neutral-400 font-mono">
-              Zero-Code Highway Telemetry Data Warehouse & Analytical Machine
-            </p>
-          </div>
+          <p className="text-xs text-slate-400 font-medium">
+            Active Dataset: <span className="text-slate-700 font-semibold">{datasetName}</span>
+          </p>
         </div>
       </div>
 
-      {/* Center Status Indicators */}
-      <div className="hidden md:flex items-center gap-5 px-4 py-1.5 rounded-lg bg-neutral-950/80 border border-neutral-800">
-        <LedIndicator id="led-master-pwr" label="MAIN POWER" active={true} color="green" />
-        <LedIndicator id="led-clock-sync" label="TELEMETRY CLOCK" active={true} color="amber" />
-        <div className="text-xs font-mono font-bold text-amber-400 bg-black px-2.5 py-0.5 rounded border border-neutral-800">
-          {timeStr}
-        </div>
-      </div>
-
-      {/* Right Model Specification Badge */}
+      {/* Quick Access Metric Cards & Upload Button */}
       <div className="flex items-center gap-3">
-        <div className="text-right hidden sm:block">
-          <div className="text-[10px] font-bold text-neutral-300 uppercase tracking-widest font-mono">
-            STAR SCHEMA ARCHITECTURE
+        {onOpenUploadModal && (
+          <button
+            type="button"
+            onClick={onOpenUploadModal}
+            className="flex items-center gap-1.5 px-4 py-2.5 neu-raised text-xs font-bold text-blue-600 rounded-2xl hover:bg-blue-50 transition-all shadow-xs"
+          >
+            <Activity className="w-4 h-4 text-blue-600" />
+            <span>Upload Dataset</span>
+          </button>
+        )}
+
+        {/* Quick Ingestion Stat Card */}
+        <div className="hidden sm:flex items-center gap-3 px-4 py-2.5 neu-inset rounded-2xl">
+          <div className="w-8 h-8 rounded-xl neu-raised-sm flex items-center justify-center text-amber-500">
+            <Zap className="w-4 h-4" />
           </div>
-          <div className="text-[9px] text-neutral-500 font-mono">
-            FACT + 5 DIMENSIONS // ANSI SQL-99
+          <div>
+            <div className="text-sm font-bold text-slate-800 leading-none">
+              27.4k <span className="text-[10px] text-slate-400 font-medium">rec/s</span>
+            </div>
+            <div className="text-[10px] text-slate-400 font-medium">
+              Live Ingestion Feed
+            </div>
           </div>
         </div>
 
-        <div className="screw-head" />
+        {/* Live Clock & System Status */}
+        <div className="flex items-center gap-4 px-4 py-2.5 neu-raised-sm rounded-2xl">
+          <LedIndicator id="led-master-pwr" label="LIVE" active={true} color="green" />
+          <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-600">
+            <Clock className="w-3.5 h-3.5 text-slate-400" />
+            <span>{timeStr}</span>
+          </div>
+        </div>
       </div>
     </header>
   );
 };
+

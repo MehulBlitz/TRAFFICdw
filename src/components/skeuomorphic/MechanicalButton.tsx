@@ -5,7 +5,7 @@ interface MechanicalButtonProps {
   id: string;
   label: string;
   onClick: () => void;
-  variant?: 'danger' | 'success' | 'amber' | 'neutral' | 'metallic';
+  variant?: 'danger' | 'success' | 'amber' | 'neutral' | 'metallic' | 'primary';
   icon?: React.ReactNode;
   disabled?: boolean;
   active?: boolean;
@@ -29,28 +29,45 @@ export const MechanicalButton: React.FC<MechanicalButtonProps> = ({
   };
 
   const getVariantStyles = () => {
+    if (active) {
+      switch (variant) {
+        case 'danger':
+          return 'neu-inset bg-[#ebf0f7] text-rose-600 font-bold border-rose-200/60';
+        case 'success':
+          return 'neu-inset bg-[#ebf0f7] text-emerald-600 font-bold border-emerald-200/60';
+        case 'amber':
+          return 'neu-inset bg-[#ebf0f7] text-amber-600 font-bold border-amber-200/60';
+        case 'primary':
+          return 'neu-inset bg-[#ebf0f7] text-blue-600 font-bold border-blue-200/60';
+        default:
+          return 'neu-inset bg-[#ebf0f7] text-slate-900 font-bold border-slate-300/60';
+      }
+    }
+
     switch (variant) {
       case 'danger':
-        return 'bg-gradient-to-b from-red-600 to-red-800 text-white border-red-950 hover:from-red-500 hover:to-red-700 shadow-red-950/60';
+        return 'neu-btn text-rose-600 hover:text-rose-700 hover:bg-rose-50/40';
       case 'success':
-        return 'bg-gradient-to-b from-emerald-600 to-emerald-800 text-white border-emerald-950 hover:from-emerald-500 hover:to-emerald-700 shadow-emerald-950/60';
+        return 'neu-btn text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50/40';
       case 'amber':
-        return 'bg-gradient-to-b from-amber-500 to-amber-700 text-black font-black border-amber-950 hover:from-amber-400 hover:to-amber-600 shadow-amber-950/60';
+        return 'neu-btn text-amber-600 hover:text-amber-700 hover:bg-amber-50/40';
+      case 'primary':
+        return 'neu-btn text-blue-600 hover:text-blue-700 hover:bg-blue-50/40';
       case 'metallic':
-        return 'bg-gradient-to-b from-neutral-200 via-neutral-400 to-neutral-500 text-neutral-900 font-bold border-neutral-600 hover:from-neutral-100 hover:to-neutral-400';
+        return 'neu-btn text-slate-700 hover:text-slate-900';
       default:
-        return 'bg-gradient-to-b from-neutral-700 via-neutral-800 to-neutral-900 text-neutral-200 border-neutral-950 hover:from-neutral-600 hover:to-neutral-800 shadow-black/80';
+        return 'neu-btn text-slate-700 hover:text-slate-900';
     }
   };
 
   const getSizeStyles = () => {
     switch (size) {
       case 'sm':
-        return 'px-2.5 py-1 text-xs';
+        return 'px-3 py-1.5 text-xs font-semibold rounded-xl';
       case 'lg':
-        return 'px-5 py-2.5 text-sm font-bold tracking-wide';
+        return 'px-6 py-3 text-sm font-bold tracking-wide rounded-2xl';
       default:
-        return 'px-3.5 py-1.5 text-xs font-semibold';
+        return 'px-4 py-2 text-xs font-semibold rounded-xl';
     }
   };
 
@@ -60,14 +77,11 @@ export const MechanicalButton: React.FC<MechanicalButtonProps> = ({
       type="button"
       onClick={handleClick}
       disabled={disabled}
-      className={`relative inline-flex items-center justify-center gap-2 rounded border shadow-md transition-all duration-75 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed select-none ${getVariantStyles()} ${getSizeStyles()} ${
-        active ? 'translate-y-0.5 shadow-inner' : 'active:translate-y-0.5 active:shadow-inner'
-      }`}
+      className={`relative inline-flex items-center justify-center gap-2 cursor-pointer transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed select-none ${getVariantStyles()} ${getSizeStyles()}`}
     >
-      {/* Chrome Bevel Highlight on Top Edge */}
-      <div className="absolute inset-x-0 top-0 h-[1px] bg-white/20 rounded-t" />
       {icon && <span className="shrink-0">{icon}</span>}
-      <span>{label}</span>
+      <span className="truncate">{label}</span>
     </button>
   );
 };
+

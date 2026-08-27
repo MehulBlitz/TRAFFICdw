@@ -2,8 +2,16 @@ import React, { useState } from 'react';
 import { HeaderBar } from './components/layout/HeaderBar';
 import { EquipmentRack, ModuleKey } from './components/layout/EquipmentRack';
 import { ControlDashboard } from './components/layout/ControlDashboard';
+import { CustomDatasetModal } from './components/common/CustomDatasetModal';
 
-// Module Components
+// Features B, C, D, E, F
+import { Module_OLAPTimeLapse } from './components/modules/Module_OLAPTimeLapse';
+import { Module_SpatialGIS } from './components/modules/Module_SpatialGIS';
+import { Module_AnomalyFraudDetection } from './components/modules/Module_AnomalyFraudDetection';
+import { Module_XAIBenchmark } from './components/modules/Module_XAIBenchmark';
+import { Module_VisualSQLPlanner } from './components/modules/Module_VisualSQLPlanner';
+
+// Classic analytical modules
 import { Module1_OLAP } from './components/modules/Module1_OLAP';
 import { Module2_PreprocessingPart1 } from './components/modules/Module2_PreprocessingPart1';
 import { Module3_PreprocessingPart2 } from './components/modules/Module3_PreprocessingPart2';
@@ -16,11 +24,37 @@ import { Module9_PowerBITableau } from './components/modules/Module9_PowerBITabl
 import { Module10_WebScraper } from './components/modules/Module10_WebScraper';
 import { Module11_SchemaAndSQL } from './components/modules/Module11_SchemaAndSQL';
 
+import { ENRICHED_TRAFFIC_FACTS } from './data/trafficData';
+import { EnrichedTrafficFact } from './types/trafficDW';
+
 export function App() {
-  const [activeModule, setActiveModule] = useState<ModuleKey>('olap');
+  const [activeModule, setActiveModule] = useState<ModuleKey>('olap_timelapse');
+  const [facts, setFacts] = useState<EnrichedTrafficFact[]>(ENRICHED_TRAFFIC_FACTS);
+  const [datasetName, setDatasetName] = useState<string>('National Indian Highway Star Schema v2.4');
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState<boolean>(false);
+
+  const handleDatasetLoaded = (newFacts: EnrichedTrafficFact[], filename: string) => {
+    setFacts(newFacts);
+    setDatasetName(filename || 'Custom Ingested Star Schema');
+  };
 
   const renderActiveModule = () => {
     switch (activeModule) {
+      case 'olap_timelapse':
+        return <Module_OLAPTimeLapse facts={facts} />;
+      case 'spatial_gis':
+        return (
+          <Module_SpatialGIS
+            facts={facts}
+            onOpenUploadModal={() => setIsUploadModalOpen(true)}
+          />
+        );
+      case 'anomaly_fraud':
+        return <Module_AnomalyFraudDetection facts={facts} />;
+      case 'xai_benchmark':
+        return <Module_XAIBenchmark facts={facts} />;
+      case 'visual_sql':
+        return <Module_VisualSQLPlanner facts={facts} />;
       case 'olap':
         return <Module1_OLAP />;
       case 'prep1':
@@ -44,39 +78,43 @@ export function App() {
       case 'schema_sql':
         return <Module11_SchemaAndSQL />;
       default:
-        return <Module1_OLAP />;
+        return <Module_OLAPTimeLapse facts={facts} />;
     }
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-neutral-100 p-3 sm:p-5 flex flex-col gap-4 font-mono">
-      {/* Top Industrial Header Plate */}
-      <HeaderBar />
+    <div className="min-h-screen bg-[#ebf0f7] text-slate-800 p-4 sm:p-6 lg:p-8 flex flex-col gap-6 font-sans">
+      {/* Top Header Plate */}
+      <HeaderBar
+        datasetName={datasetName}
+        onOpenUploadModal={() => setIsUploadModalOpen(true)}
+      />
 
-      {/* Main 3-Panel Industrial Studio Layout */}
-      <main className="flex-1 flex flex-col lg:flex-row gap-4 items-start w-full">
-        {/* Left Panel: The Equipment Rack (11 Module Switches) */}
+      {/* Main 3-Panel Studio Layout */}
+      <main className="flex-1 flex flex-col lg:flex-row gap-6 items-start w-full">
+        {/* Left Panel: The Equipment Rack */}
         <EquipmentRack
           activeModule={activeModule}
           onSelectModule={(mod) => setActiveModule(mod)}
+          onOpenUploadModal={() => setIsUploadModalOpen(true)}
         />
 
         {/* Center Panel: The Drafting Table Workspace */}
         <section
           id="center-drafting-table"
-          className="flex-1 w-full min-w-0 bg-brushed-chassis p-4 rounded-2xl border-2 border-neutral-800 shadow-2xl overflow-hidden relative flex flex-col gap-4"
+          className="flex-1 w-full min-w-0 neu-raised-lg p-6 rounded-3xl overflow-hidden relative flex flex-col gap-5 border border-white/80"
         >
-          {/* Top Drafting Table Ruler Bar */}
-          <div className="flex items-center justify-between border-b border-neutral-800 pb-2 text-[10px] text-neutral-400 font-mono">
+          {/* Top Status Bar */}
+          <div className="flex items-center justify-between border-b border-slate-200/80 pb-3 text-xs text-slate-500 font-medium">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-sm shadow-emerald-400" />
-              <span className="font-bold text-neutral-300 uppercase">DRAFTING TABLE WORKSPACE</span>
+              <span className="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-xs shadow-blue-400" />
+              <span className="font-bold text-slate-800">Workspace View</span>
             </div>
-            <div className="hidden sm:block text-neutral-500">
-              COORDINATES: [LAT 19.0760, LNG 72.8777] // MUMBAI-PUNE CORRIDOR
+            <div className="hidden sm:block text-slate-400 font-mono text-[11px]">
+              Active Corridors: Mumbai-Pune • Delhi-Gurugram • Bengaluru ORR • Hyderabad ORR • Chennai OMR • Kolkata EMB • Samruddhi
             </div>
-            <div className="text-amber-400 font-bold uppercase">
-              ACTIVE MODULE: {activeModule.toUpperCase()}
+            <div className="text-blue-600 font-bold uppercase tracking-wider text-[11px] px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200">
+              Module: {activeModule}
             </div>
           </div>
 
@@ -84,19 +122,26 @@ export function App() {
           <div className="w-full">{renderActiveModule()}</div>
         </section>
 
-        {/* Right Panel: The Control Dashboard (VU Meters, Dials, Master Trigger) */}
+        {/* Right Panel: The Control Dashboard */}
         <ControlDashboard />
       </main>
 
-      {/* Industrial Footer Status Bar */}
-      <footer className="w-full bg-neutral-950 p-2.5 rounded-xl border border-neutral-800 flex flex-wrap items-center justify-between text-[10px] text-neutral-500 font-mono">
+      {/* Custom Dataset Upload Modal */}
+      <CustomDatasetModal
+        isOpen={isUploadModalOpen}
+        onClose={() => setIsUploadModalOpen(false)}
+        onDatasetLoaded={handleDatasetLoaded}
+      />
+
+      {/* Footer Status Bar */}
+      <footer className="w-full neu-raised px-6 py-3.5 rounded-2xl flex flex-wrap items-center justify-between text-xs text-slate-400 font-medium">
         <div>
-          TRAFFIC DATA WAREHOUSE (TrafficDW) // REPOSITORY SCHEMA: STAR-01
+          Traffic Data Warehouse (TrafficDW) • Star Schema v2.4 • Hackathon Engine
         </div>
-        <div className="flex items-center gap-4">
-          <span>ETL ENGINE: ONLINE</span>
-          <span>OLAP SLICING: ANSI SQL READY</span>
-          <span>PRECISION: IEEE-754</span>
+        <div className="flex items-center gap-6">
+          <span>Active Rows: {facts.length}</span>
+          <span>ETL Pipeline: Synced</span>
+          <span>Precision: IEEE-754</span>
         </div>
       </footer>
     </div>
@@ -104,3 +149,4 @@ export function App() {
 }
 
 export default App;
+

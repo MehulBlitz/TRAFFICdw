@@ -79,6 +79,11 @@ export interface EnrichedTrafficFact extends RouteTrafficFact {
 // Module identifiers
 export type ModuleId =
   | 'olap'
+  | 'olap_timelapse'
+  | 'spatial_gis'
+  | 'anomaly_detection'
+  | 'xai_benchmark'
+  | 'visual_sql_planner'
   | 'preprocess_1'
   | 'preprocess_2'
   | 'classification'
@@ -95,10 +100,79 @@ export interface ModuleMeta {
   index: number;
   code: string;
   title: string;
-  category: 'OLAP' | 'Preprocessing' | 'Machine Learning' | 'Data Mining' | 'BI & ETL';
+  category: 'OLAP' | 'GIS & Spatial' | 'Preprocessing' | 'Machine Learning' | 'Data Mining' | 'BI & ETL' | 'Database Engine';
   description: string;
   icon: string;
   badge: string;
+}
+
+// Indian Road Corridor GIS Meta
+export interface IndianCorridorMeta {
+  id: string;
+  name: string;
+  code: string;
+  state: string;
+  region: string;
+  totalLengthKm: number;
+  laneCount: number;
+  tollPlazas: string[];
+  coordinates: [number, number]; // Center Lat, Lng
+  zoomLevel: number;
+  speedLimitKmph: number;
+  avgDailyVehicles: number;
+  keySensors: {
+    id: string;
+    name: string;
+    kmMark: number;
+    lat: number;
+    lng: number;
+    currentSpeedKmph: number;
+    vehicleCountPerMin: number;
+    status: 'Optimal' | 'Degraded' | 'Faulty' | 'Congested';
+  }[];
+}
+
+// Anomaly & Fraud Record
+export interface AnomalyRecord {
+  id: string;
+  timestamp: string;
+  sensorId: string;
+  corridor: string;
+  location: string;
+  type: 'SENSOR_DEADLOCK' | 'PHANTOM_JAM' | 'FASTAG_FRAUD' | 'TELEPORTATION_VIOLATION' | 'VOLTAGE_SPIKE';
+  severity: 'Critical' | 'High' | 'Medium' | 'Low';
+  observedValue: string;
+  expectedRange: string;
+  isolationScore: number; // 0 to 1
+  description: string;
+  remediation: string;
+  status: 'Flagged' | 'Cleansed' | 'Ignored';
+}
+
+// Explainable AI & SHAP attribution
+export interface ShapFeatureAttribution {
+  featureName: string;
+  value: string | number;
+  attribution: number; // Positive increases congestion risk, negative reduces
+  direction: 'increases_congestion' | 'reduces_congestion';
+}
+
+// SQL Execution Plan Node
+export interface ExecutionPlanNode {
+  id: string;
+  nodeType: string;
+  relationName?: string;
+  indexName?: string;
+  startupCost: number;
+  totalCost: number;
+  planRows: number;
+  planWidth: number;
+  actualStartupTimeMs?: number;
+  actualTotalTimeMs?: number;
+  actualRows?: number;
+  filter?: string;
+  joinCondition?: string;
+  subNodes?: ExecutionPlanNode[];
 }
 
 // CRT & Display Themes
