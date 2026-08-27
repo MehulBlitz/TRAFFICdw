@@ -1,0 +1,6 @@
+{
+  "name": "TrafficDW Studio",
+  "description": "A zero-code skeuomorphic traffic data warehouse, OLAP analytics, machine learning & data mining platform with physical controls, real-world schemas, interactive algorithms, and BI reporting.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
